@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html>
+<head>
+<!--des明文处理过程实现-->
+<!--明文转化为二进制并储存，并实现分块，64位一块-->
+<title>DES明文处理</title>
+<meta charset="utf-8">
+<script>
+function char_do()
+{
+	var s = document.getElementById("str").value;//alert(s);
+	var asc_in = new Array();//储存转化后的ASCII码
+	var bit_in = new Array();//存储转化后的二进制数
+	var las_in = new Array();//存储切割后的二进制数
+	var end_in = new Array(64);//存储最后的二进制数组
+	var num = 0;//最后存储的计数
+	var cutSnum = 0;//切割字符串计数
+	var cutBnum = 0;//切割二进制计数
+	var allbl = 0;//二进制总位数
+	var sleg;
+	var x0;
+	sleg = s.length;//字符串长度
+	//开始循环
+	//document.write(sleg);
+	var bleg = new Array();//存储bit_in[]每组长度
+	for(cutSnum;cutSnum<sleg;cutSnum++)
+	{
+		
+		//document.write("**");
+
+
+		asc_in[cutSnum] = s.charCodeAt(cutSnum);//切割字符串，并储存在asc_in[]中
+		
+
+		//document.write(asc_in[cutSnum]);
+		//document.write("**");
+		//测试asc_in值
+
+
+		bit_in[cutSnum] = asc_in[cutSnum].toString(2);//十进制转化为二进制
+		
+
+		//document.write(bit_in[cutSnum]);
+		//document.write("**");
+		//document.write("<br>");
+		//测试bit_in值
+
+
+		bleg[cutSnum] = bit_in[cutSnum].length;//切割后每组二进制数位数
+		/*document.write(bleg[cutSnum]);
+		document.write("<br>");*/
+		//测试bleg
+		allbl = allbl + bleg[cutSnum];
+
+
+		las_in = bit_in[cutSnum].split("");//切割每组二进制数并储存在同一个数组中
+		//循环储存进最后的数组
+		/*document.write(las_in);
+		document.write("<br>");*/
+		//测试las_in
+
+
+		for(cutBnum=0;cutBnum<bleg[cutSnum];cutBnum++)
+		{
+			end_in[num+cutBnum] = las_in[cutBnum];
+			/*document.write(end_in[num+cutBnum]);
+			document.write(",");*/
+		}
+		//document.write("<br>");
+		num = num+bleg[cutSnum];
+		/*document.write(asc_in);
+		document.write(end_in);
+		document.write("<br>");*/
+		//测试edn_in
+	}
+	//document.write(end_in);
+
+	//开始分组，64位一组
+	var fnum = 0;
+	var finnum = 0;
+	var numm = 0;
+	var fin = new Array();
+	//document.write(allbl);
+	var x = parseInt(allbl/64);
+	var y = allbl%64;
+	/*document.write(x);
+	document.write("<br>");
+	document.write(y);*/
+	//document.write(x);
+	for(fnum = 0;fnum<x;fnum++)
+	{
+		fin[fnum] = new Array();
+		for(finnum = 0;finnum<64;finnum++)
+		{
+			fin[fnum][finnum] = end_in[numm+finnum];
+			//document.write(fin[fnum][finnum]);
+		}
+		numm = numm+64;
+		//document.write(fin);
+	}
+	//document.write(x);
+	//document.write(fin);
+	if(y!=0)
+	{
+		x0 = x+1;
+		fin[x] = new Array();
+	//document.write(fin);
+	}
+	for(finnum = 0;finnum<y;finnum++)
+	{
+		fin[x][finnum] = end_in[numm+finnum];
+	}
+	//空位填充？？？
+	for(finnum = y;finnum<64;finnum++)
+	{
+		fin[x][finnum] = 0;
+	}
+
+
+
+
+	//分割并储存完毕
+
+	
+
+	/*
+	//输出测试
+	for(fnum = 0;fnum<x0;fnum++)
+	{
+		document.write(fin[fnum][0]);
+		for(finnum = 1;finnum<fin[fnum].length;finnum++)
+		{
+			document.write(",")
+			document.write(fin[fnum][finnum]);
+		}
+		document.write("<br>");
+	}
+	*/
+
+	return fin;
+
+
+
+}
+
+
+
+
+function char_show()
+{
+	var f = char_do();
+	var i,j;
+	for(i = 0;i<f.length;i++)
+	{
+		document.write(f[i][0]);
+		for(j = 1;j<f[i].length;j++)
+		{
+			document.write(",");
+			document.write(f[i][j]);
+		}
+		document.write("<br>");
+	}
+
+}
+/*测试ASCII,二进制，转化与储存
+function ASCII()
+{
+	var a = "a";                      //alert(a);
+	var b = a.charCodeAt(0);          //alert(b);//change to ASCII
+	var c = b.toString(2);            //alert(c);//change to bit
+	var x = c.split("");              //alert(x);//cut
+
+}*/
+
+/*测试循环转化
+	
+function ASCIII()
+{
+	var i = 0;
+	var str = "hello";
+	var bary = new Array();
+	var ary = new Array();
+	//alert(str.length);
+	for(i;i<sleg;i++)
+	{
+		asc = str.charCodeAt(i);
+		bit = asc.toString(2);
+		bary[i] = bit;
+		}		
+		//document.write(bary);
+}*/
+
+/*测试动态id
+
+function actionid()
+{
+	var i = 0;
+	for(i;i<3;i++)
+	{
+		var m = document.getElementById("x_"+i);
+		m.innerHTML="hhh"+i;
+	}
+}*/
+
+/*----By Large_rour*/
+</script>
+</head>
+<body>
+<div align="center">
+<form>
+	
+
+	输入需要处理内容<br>
+	
+
+
+
+	<input type="text" name="a" id="str">
+
+
+
+</form>
+	
+
+
+	<button onclick="char_do()">点击处理</button>
+	<button onclick="char_show()">跳转结果</button>
+
+
+
+</div>
+</body>
+</html>
+<!--  -By Large_rour  -->

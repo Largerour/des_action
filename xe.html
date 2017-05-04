@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+	<title></title>
+
+
+<script type="text/javascript">
+	
+function x()
+{
+
+
+	var x = [1,1,0,0,1];
+	var y = [0,1,0,1,1];
+	var p = new Array();
+	var i;
+	for(i = 0;i<5;i++)
+	{
+		p[i] = x[i] || y[i];
+	}
+
+	document.write(p);
+}
+
+
+</script>
+</head>
+<body>
+<div align="center">
+<button onclick="x()">test</button>
+</div>
+</body>
+</html>
